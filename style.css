@@ -1,0 +1,8 @@
+.universal_paginate_link {
+    margin: 4px;
+}
+
+.universal_paginate_link.active {
+	font-weight: bold;
+	text-decoration: none;
+}

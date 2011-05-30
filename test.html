@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Test</title>
+<link rel="stylesheet" media="screen" href="style.css">
+</head>
+<body>
+
+    <style>
+		* {
+			font: 14px Arial;
+		}
+		body {
+			width: 600px;
+			margin: 20px auto;
+		}
+		h1 {
+			font-size: 20px;
+			font-weight: bold;
+		}
+		h2 {
+			font-size: 16px;
+			font-weight: bold;
+		}
+	</style>
+
+	<p>
+		Here are a few examples of Universal Paginate in action. As I said, you can paginate anything you like, as far as you can give 
+		it a common template for every item in the list. As it actually uses the jQuery Templates syntax, you can have pretty complex items, 
+		each with specific parts.
+	</p>
+	<p>
+		I added a one second sleep in each server-side script so that you can easily see the benefits of page pre-loading.
+	</p>
+
+	<p>Let's start with a simple &lt;ul&gt; list :</p>
+	<ul id="ul_list">
+
+	</ul>
+
+	<button class="refresh">Refresh!</button>
+	<button class="full_refresh">Full refresh!</button>
+
+	<p>Then we could go a bit more crazy with a &lt;dl&gt; list (specified this time with a script template rather than directly a string template).</p>
+	<p>This doesn't use the pre-loading system, look how slower it is to navigate.</p>
+	<dl id="dl_list">
+
+	</dl>
+	<p>As you can see, some &lt;dt&gt;s have only one &lt;dd&gt; associated, some others have more than one. And it simply works!</p>
+
+	<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="jquery.tmpl.js"></script>
+	<script type="text/javascript" src="jquery.universalpaginate.js"></script>
+
+
+	<script id="dl_list_template" type="text/x-jquery-tmpl">
+		<dt>${number}</dt>{{each(language, term) translations}}<dd>${language} : ${term}</dd>{{/each}}
+	</script>
+
+	<script type="text/javascript">
+	$(function() {
+		$('#ul_list').universalPaginate({
+			itemTemplate: '<li>${number} : ${letters}</li>',
+			dataUrl: "data_ul.php"
+		});
+		$('.refresh').click(function() {
+			$('#ul_list').universalPaginate('refresh');
+		});
+		$('.full_refresh').click(function() {
+			$('#ul_list').universalPaginate('refresh', {reInit: true});
+		});
+		
+		$('#dl_list').universalPaginate({
+			itemTemplate: $('#dl_list_template'),
+			nbItemsByPage: 5,
+			nbPreloadedPages: 0,
+			dataUrl: "data_dl.php"
+		});
+	});
+	</script>
+
+</body>
+</html>
