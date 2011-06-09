@@ -24,7 +24,6 @@ You can also call methods, the jQueryUI way:
 HTML
 
 Just any valid HTML element:
-View Raw Code?
 
     <button id="try">Try it!</button>
 
