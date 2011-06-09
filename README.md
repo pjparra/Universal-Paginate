@@ -2,7 +2,7 @@
 
 Ever wanted to paginate some long list of items? Probably. You probably found some jQuery plugins out there that did the trick. But. But there was always something you didn't like about it. Most certainly it was the fact that you had to change your HTML markup to fit the plugin expected syntax. You probably had to transform your nice, lightweight, semantic list into a less convenient list, or even into a table.
 
-What I propose through Universal Paginate is a template-based pagination system. Whatever you want to paginate, it works. A simple <ul> list, a more complicated <dl> list, table rows... Universal Paginate simply doesn't care. Oh, and it supports natively remote data sources. Just give the URL to fetch data from, and it will take care of the rest. It renders your data with the given template and paginate it, simply.
+What I propose through Universal Paginate is a template-based pagination system. Whatever you want to paginate, it works. A simple &lt;ul&gt; list, a more complicated <dl> list, table rows... Universal Paginate simply doesn't care. Oh, and it supports natively remote data sources. Just give the URL to fetch data from, and it will take care of the rest. It renders your data with the given template and paginate it, simply.
 
 You will notice some nice other features, like page pre-loading, automatic clipping of long page links list and periodic refresh, among others.
 
