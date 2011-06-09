@@ -1,4 +1,4 @@
-# Some context
+#Some context
 
 Ever wanted to paginate some long list of items? Probably. You probably found some jQuery plugins out there that did the trick. But. But there was always something you didn't like about it. Most certainly it was the fact that you had to change your HTML markup to fit the plugin expected syntax. You probably had to transform your nice, lightweight, semantic list into a less convenient list, or even into a table.
 
@@ -10,57 +10,84 @@ Since version 2.0, you can also interact with this plugin programmatically, go t
 
 All of this in only 336 lines of nice, readable, finely commented jQuery code and the use of the now official jQuery Templates plugin, which ensures durability and extensibility.
 
-# Usage
+#Usage
 
-## JS
+##JS
 
-The jQuery object to which you apply the plugin will be the trigger of the confirmation box. This trigger will be passed along in the parameters for the callback functions.
+To create a paginated list, just do the following:
 
-    $('#try').fastConfirm(options);
+    $('.my_list').universalPaginate(options);
 
-What else?
-You can also call methods, the jQueryUI way:
+You can also call some methods using the following syntax:
 
-    $('#try').fastConfirm('close');
+    $('.my_list').universalPaginate('methodName', options);
 
-## HTML
+##HTML
 
-Just any valid HTML element:
-
-    <button id="try">Try it!</button>
+Just any container that will receive your items. That includes div, ul, dl, table... Just anything!
 
 ##CSS
 
-A CSS file is included in the downloadable package. But you might want to add some custom CSS to make the integration more seamless.
+A default CSS is given to make it a bit easier on the eyes, but there's no magic, if you want to integrate it nicely, you will probably have to customize it a little.
 
-You'll see in the included CSS file that there are two sections, the first one shouldn't be edited, it is a part of the plugin behaviour, and the second part contains what is relative to the look & feel, so you can customize it (if you want a red background for your confirmation box for example).
+##JSON
 
-## Options
+Universal Paginate expects your server to send him some JSON formatted data. You probably wonder what your server-side script should return. You will find a helper class in the package which will take care of this formatting for you. You can use it as provided or copy-paste the code bits you are interested in.
+The JSON output should look like this (assuming that you requested items starting at index 20, with 10 items by page):
 
-There are a few options to make Fast Confirm more flexible. Here they are, with their default values:
+    {
+    "startIndex": "20",
+    "nbItemsByPage": "5",
+    "nbTotalItems": "145",
+    "data": [
+    {"id":"first object id","other_property":"other value"},
+    {"id":"second object id","other_property":"other value"},
+    {"id":"third object id","other_property":"other value"},
+    {"id":"fourth object id","other_property":"other value"},
+    {"id":"fifth object id","other_property":"other value"},
+    ]
+    } 
 
-    position: ['top', 'right', 'bottom', 'left']
-    Defines where to put the confirmation box, realtively to the trigger element.
-    offset: {top: 0, left: 0}
-    Allows precise positioning. Top and left offsets will be added to the computed default absolute position of the confirmation box. If you set the top offset to -5 for example, the confirmation box will be 5 pixels above its default position.
-    zIndex: 10000
-    Allows you to fine tune the z-index if you're facing z-index issues causing the confirm box not to appear
-    eventToBind: [eventName, false]
-    An event name (submit, click...) or false. If an event name is provided, Fast Confirm will take care of event management. This is really useful when you want to deal with form submission.
-    questionText: "Are you sure?"
-    The question asked by the confirm box.
-    proceedText: "Yes"
-    The text of the button designated to confirm the action
-    cancelText: "No"
-    The text of the button designated to cancelthe action
-    targetElement: null
-    A selector to specify on which element, inside the binded element, the confirm box should be opened. Mostly useful to open the box on the submit button of a form.
-    unique: [true, false]
-    If set to true, only one confirm box can remain opened. Any new confirm box will close opened boxes, triggering the "cancel" action on each one.
+The nbTotalItems is the total number of items in your data set (not restricted to the page you requested). It is used to produce the pagination links, amongst others.
 
-    fastConfirmClass: 'fast_confirm'
-    The CSS class prefix used in all Fast Confirm elements. If you want to change classes names for any reason, you have to use this parameter
-    onProceed: function(trigger, clicked) {$.fastConfirm.close(trigger);}
-    The function called when the user hits the confirmation button
-    onCancel: function(trigger, clicked) {$.fastConfirm.close(trigger);}
-    The function called when the user hits the cancellation button
+##Options
+
+The plugin provides several options so that you can make it work the way you want. Here there are:
+
+    nbItemsByPage: 10
+    The number of items by page
+    nbPagesDisplayed: 10
+    The number of page links to display before the clipping occurs
+    itemTemplate: '<li>${value}</li>'
+    Probably the most important part, this is the template for your items. It supports the jQuery Templates plugin syntax
+    dataUrl: null
+    The URL to fetch the data from
+    nbPreloadedPages: 2
+    The number of pages to pre-load, before and after the current page. For instance, with the default value (2) loading page 4 will also load pages 2, 3, 5 and 6. A great speed improvement can be achieved.
+    refreshInterval: null
+    In milliseconds, the time elapsed between two data refreshes. null means no refresh at all.
+    universalPaginateClass: 'universal_paginate'
+    The default prefix for Universal Paginate specific classes and other things
+    controlsPosition: ['top', 'bottom']
+    The position where the controls (number of items by page and page links) will be appended. Top or bottom of the list
+    paginationNavigationArrows: [true, false]
+    Whether or not to display "prev" and "next" arrows for page navigation
+    allowItemsByPageChange: [true, false]
+    Whether to give the user or not the ability to change the number of items to display on each page
+    displayItemsByPageSelector: [true, false]
+    Whether to display or not a selector to allow the user to change the number of items by page
+    itemsByPageText: 'Items by page'
+    The default text displayed in front of the items by page selector
+    pageText: 'Page'
+    The default text displayed in front of the page links list
+    nbItemsByPageOptions: [5, 10, 15, 20, 30, 60, 100]
+    The possible options given to the user to customize the number of items displayed by page
+    headerElement: null
+    If you want to append the controls (page links and number of items by page) to an existent element, just give a selector, DOM element or jQuery object of this element
+    noDataText: '<div>No data to display</div>'
+    The text to display when there is no data to display
+    ajaxOptions: {}
+    Some options that will be used in the get or post request when querying the server for data. The hash is the same as the one you would use with $.ajax() or $.ajaxSetup(). It will override the defaults that UP uses in the ajax requests. Allows, among others, to switch from get to post request.
+    onDataUpdate: function(data) {}
+    This callback is triggered every time the plugin has fetched new data from the data source. The data is passed as a parameter
+
