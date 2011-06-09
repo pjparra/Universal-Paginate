@@ -55,6 +55,7 @@ The nbTotalItems is the total number of items in your data set (not restricted t
 The plugin provides several options so that you can make it work the way you want. Here there are:
 
 * __nbItemsByPage__: 10
+
 The number of items by page
 * __nbPagesDisplayed__: 10
 The number of page links to display before the clipping occurs
