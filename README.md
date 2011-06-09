@@ -82,7 +82,7 @@ The plugin provides several options so that you can make it work the way you wan
     * The default text displayed in front of the page links list
 * __nbItemsByPageOptions__: [5, 10, 15, 20, 30, 60, 100]
     * The possible options given to the user to customize the number of items displayed by page
-* __headerElement_: null
+* __headerElement__: null
     * If you want to append the controls (page links and number of items by page) to an existent element, just give a selector, DOM element or jQuery object of this element
 * __noDataText__: '<div>No data to display</div>'
     * The text to display when there is no data to display
